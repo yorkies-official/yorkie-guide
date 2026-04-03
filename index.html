@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Yorkie Guide — 7 Warning Signs Every Owner Must Know</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C8962A;
+    --gold-light: #F0C96A;
+    --gold-pale: #FDF6E3;
+    --brown-dark: #2C1A0E;
+    --brown-mid: #5C3D1E;
+    --cream: #FFFDF7;
+    --text: #2C1A0E;
+    --text-muted: #7A5C3A;
+    --red-urgent: #B83232;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BANNER ── */
+  .top-banner {
+    background: var(--brown-dark);
+    color: var(--gold-light);
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #2C1A0E 0%, #4A2C10 50%, #2C1A0E 100%);
+    padding: 48px 20px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,150,42,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(200,150,42,0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 40px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 7vw, 52px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    max-width: 680px;
+    margin: 0 auto 16px;
+  }
+
+  .hero h1 span {
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 3.5vw, 18px);
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  /* ── FORM BOX (inside hero, floats above image) ── */
+  .form-box {
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    padding: 28px 24px 32px;
+    max-width: 480px;
+    margin: 0 auto;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.25);
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-box-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red-urgent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .form-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 4.5vw, 24px);
+    color: var(--brown-dark);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .input-wrap input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 2px solid #E8D9C0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Lato', sans-serif;
+    color: var(--text);
+    background: #FDFAF4;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-wrap input:focus {
+    border-color: var(--gold);
+  }
+
+  .input-wrap input::placeholder { color: #B09878; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 17px;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.1s;
+    position: relative;
+  }
+
+  .btn-submit:hover { background: #A87820; }
+  .btn-submit:active { transform: scale(0.98); }
+
+  .btn-submit.loading { opacity: 0.7; pointer-events: none; }
+
+  .form-disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+
+  .form-disclaimer span { color: var(--gold); font-weight: 700; }
+
+  /* Error / success */
+  .form-msg {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .form-msg.error { background: #FEE2E2; color: #B83232; display: block; }
+  .form-msg.success { background: #D1FAE5; color: #065F46; display: block; }
+
+  /* ── SECTION: What's inside ── */
+  .section {
+    padding: 52px 20px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 34px);
+    color: var(--brown-dark);
+    line-height: 1.25;
+    margin-bottom: 28px;
+  }
+
+  .signs-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .signs-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--gold-pale);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .sign-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .sign-text strong {
+    display: block;
+    font-weight: 700;
+    color: var(--brown-dark);
+    margin-bottom: 2px;
+  }
+
+  .sign-text span {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid #E8D9C0;
+    margin: 0 20px;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-section {
+    background: var(--brown-dark);
+    padding: 48px 20px;
+    text-align: center;
+  }
+
+  .testimonial-section .section-tag { color: var(--gold-light); }
+
+  blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 4vw, 22px);
+    color: #fff;
+    line-height: 1.55;
+    max-width: 560px;
+    margin: 0 auto 20px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    color: var(--gold-light);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── BOTTOM CTA ── */
+  .bottom-cta {
+    padding: 52px 20px;
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .bottom-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 30px);
+    color: var(--brown-dark);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .bottom-cta p {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .bottom-form .input-wrap { gap: 12px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown-dark);
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+  }
+
+  /* ── SUCCESS PAGE ── */
+  #success-page {
+    display: none;
+    min-height: 100vh;
+    background: var(--cream);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  #success-page.show { display: flex; }
+
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: #D1FAE5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 24px;
+  }
+
+  #success-page h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--brown-dark);
+    margin-bottom: 12px;
+  }
+
+  #success-page p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 400px;
+  }
+</style>
+</head>
+<body>
+
+<div id="main-page">
+
+  <!-- Top banner -->
+  <div class="top-banner">
+    🐾 FREE GUIDE — No spam. Unsubscribe anytime.
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">Free Yorkie Guide</div>
+    <h1>
+      Is Your Yorkie Trying to
+      <span>Warn You Something's Wrong?</span>
+    </h1>
+    <p class="hero-sub">
+      Most owners miss these 7 critical warning signs — until it's too late.
+      Get the free guide and know exactly what to watch for.
+    </p>
+
+    <!-- FORM — visible immediately, no scroll needed -->
+    <div class="form-box">
+      <div class="form-box-label">⚠️ Yorkie owners are reading this right now</div>
+      <h2>Send Me the Free Guide Now</h2>
+
+      <div id="form-msg" class="form-msg"></div>
+
+      <div class="input-wrap">
+        <input type="text" id="fname" placeholder="Your first name" autocomplete="given-name">
+        <input type="email" id="femail" placeholder="Your best email address" autocomplete="email">
+        <button class="btn-submit" id="submit-btn" onclick="submitForm()">
+          Yes — Protect My Yorkie! →
+        </button>
+      </div>
+      <p class="form-disclaimer">
+        <span>100% Free.</span> No spam. Unsubscribe anytime.
+      </p>
+    </div>
+  </section>
+
+  <!-- What's inside -->
+  <section class="section">
+    <div class="section-tag">What's inside the free guide</div>
+    <h2>7 Signs Most Yorkie Owners Never Notice</h2>
+
+    <ul class="signs-list">
+      <li>
+        <span class="sign-icon">😮</span>
+        <div class="sign-text">
+          <strong>The "reverse sneeze" owners always ignore</strong>
+          <span>And when it turns dangerous</span>
+        </div>
+      </li>
+      <li>
+        <span class="sign-icon">🦷</span>
+        <div class="sign-text">
+          <strong>The tooth color that means: go to the vet now</strong>
+          <span>Most owners mistake this for normal aging</span>
+        </div>
+      </li>
+      <li>
+        <span class="sign-icon">😰</span>
+        <div class="sign-text">
+          <strong>Sign #1 — most owners confuse this with normal behavior</strong>
+          <span>Revealed inside the guide</span>
+        </div>
+      </li>
+      <li>
+        <span class="sign-icon">⚠️</span>
+        <div class="sign-text">
+          <strong>Sign #5 — the lethargy pattern that needs immediate attention</strong>
+          <span>Revealed inside the guide</span>
+        </div>
+      </li>
+      <li>
+        <span class="sign-icon">🐾</span>
+        <div class="sign-text">
+          <strong>Signs #6 and #7 — revealed inside</strong>
+          <span>The ones vets say are most often missed</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Testimonial -->
+  <div class="testimonial-section">
+    <div class="section-tag">What Yorkie moms are saying</div>
+    <blockquote>
+      "I thought Biscuit was just being dramatic. The guide made me realize sign #2 was actually serious. My vet confirmed it. So grateful I caught it early."
+    </blockquote>
+    <div class="testimonial-author">— Lisa M., Yorkie mom · Texas</div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <h2>Get Your Free Guide Right Now</h2>
+    <p>Join thousands of Yorkie owners who now know exactly what to watch for — before it becomes an emergency.</p>
+
+    <div class="bottom-form">
+      <div class="input-wrap">
+        <input type="text" id="fname2" placeholder="Your first name" autocomplete="given-name">
+        <input type="email" id="femail2" placeholder="Your best email address" autocomplete="email">
+        <button class="btn-submit" onclick="submitForm2()">
+          Send Me the Free Guide →
+        </button>
+      </div>
+      <p class="form-disclaimer" style="margin-top:12px">
+        <span>100% Free.</span> No spam. Unsubscribe anytime.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 For the Love of Yorkies · <a href="mailto:fortheloveofyorkiesofficial@gmail.com" style="color:inherit">Contact</a>
+  </footer>
+
+</div>
+
+<!-- Success page -->
+<div id="success-page">
+  <div class="success-icon">✅</div>
+  <h2>Check your inbox!</h2>
+  <p>Your free guide is on its way. Check your email (and your spam folder just in case) — it should arrive within a few minutes.</p>
+  <p style="margin-top:16px; font-size:14px;">💛 Thank you for caring about your Yorkie.</p>
+</div>
+
+<script>
+const API_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiM2UwYzExNzBiZDUxNjc4MDgyZGE1ZDc5ZmZmY2RlMTI4OTQ0OTU0ZTNjMmIyOGRlMmY2NjA5ZmZlNWI1YTkyODZiYzE1ODkyMjI2NjcyMWEiLCJpYXQiOjE3NzUyNTE5NzAuMjg5MTg2LCJuYmYiOjE3NzUyNTE5NzAuMjg5MTg5LCJleHAiOjQ5MzA5MjU1NzAuMjg1MjQ4LCJzdWIiOiIyMjM4OTg0Iiwic2NvcGVzIjpbXX0.s0a-3-MmMWRsBU00hYF60bjTYlbJSsFzk0AaAY9YxfkLKPZr8wEVTUyqP6cSgp2-sROHLy4iT6bf7cFaCgJZPyhnfZaDSy67HZHrg9JY04UU8hrpv4DNNG7cVZFY0avv2vnfVcq2RKw2cJ5aafYcqINrCL9FzYey9PlhzfAy44wIUevdQHQHZyuoHCNnBntHFT_rO3729z6KWYSjTBTS1M5_ovX5BUX-GGvhjJSEQJWnRUHbYDPtmtHe-mkilujenica4QZI28paHIG3CudBwGdOgsXZ7zA8OGXPyedODBjMH3T7kgYJKBqdaST9iqxzPU_V6guVxcll-Gd3JBuKig5ZDQIIHUQEu9zP6LoJOAM9lGnHOAyPtVM-Eaw8XVEZi3s3v78e4KVCdx_UdBTepVLXp3HYPjJt7evbZLurM2VfeGaKcbZe_QAdqbrrvj422fWfELW6OyYyzOEubmjidmKwtukwun8ITUKWt-3f4GOzU4MV5s97s0FCWBgfyNuFzu_3T8usL6vp2udDC7u06WMjQGYBTPRgQtz_X20Rc0hA4ApWh3a5v1xNCPuYBS7OmEx7uQGvQmlOaos4T1J7YXvkIrU9IdA7YJXJYe8EIzYkTJOJ0FU-wus96V4yr8OYD1cqul8wSmqg686eLkvGPfGm-UeAuyNYZ1hVKUcRolY';
+
+// Group ID visible in the MailerLite capture
+const GROUP_ID = '146518688078086205';
+
+function showMsg(msg, type) {
+  const el = document.getElementById('form-msg');
+  el.textContent = msg;
+  el.className = 'form-msg ' + type;
+}
+
+async function doSubmit(name, email) {
+  const btn = document.getElementById('submit-btn');
+  if (btn) { btn.classList.add('loading'); btn.textContent = 'Sending...'; }
+
+  try {
+    const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + API_TOKEN
+      },
+      body: JSON.stringify({
+        email: email,
+        fields: { name: name },
+        groups: [GROUP_ID]
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok || res.status === 200 || res.status === 201) {
+      document.getElementById('main-page').style.display = 'none';
+      document.getElementById('success-page').classList.add('show');
+    } else {
+      const errMsg = data?.message || 'Something went wrong. Please try again.';
+      showMsg('⚠️ ' + errMsg, 'error');
+      if (btn) { btn.classList.remove('loading'); btn.textContent = 'Yes — Protect My Yorkie! →'; }
+    }
+  } catch (e) {
+    showMsg('⚠️ Connection error. Please try again.', 'error');
+    if (btn) { btn.classList.remove('loading'); btn.textContent = 'Yes — Protect My Yorkie! →'; }
+  }
+}
+
+function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  if (!name) { showMsg('Please enter your first name.', 'error'); return; }
+  if (!email || !email.includes('@')) { showMsg('Please enter a valid email address.', 'error'); return; }
+  doSubmit(name, email);
+}
+
+function submitForm2() {
+  const name = document.getElementById('fname2').value.trim();
+  const email = document.getElementById('femail2').value.trim();
+  if (!name) { alert('Please enter your first name.'); return; }
+  if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  doSubmit(name, email);
+}
+</script>
+</body>
+</html>
