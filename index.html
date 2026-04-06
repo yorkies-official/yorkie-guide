@@ -1164,9 +1164,7 @@ async function submitForm(nameId, emailId, msgId, errId) {
   <p style="margin-top:10px;">© 2025 For the Love of Yorkies. All rights reserved.</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// image embedded directly in HTML
-
+<script>
 const MAILERLITE_API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiZmIzNGY4MWVlZGY2YWRlMTk5MzYxMTZjZWE3MGI0ZWFkNGZhMzBmMTRmYTJiZjIzZDVjY2RhNjkyYmNjYmVkNTk5YTZhM2YyNTUwMzdiYzgiLCJpYXQiOjE3NzU0NjY5MTEuMTAxMzYzLCJuYmYiOjE3NzU0NjY5MTEuMTAxMzY1LCJleHAiOjQ5MzExNDA1MTEuMDk3MzQyLCJzdWIiOiIyMjM4OTg0Iiwic2NvcGVzIjpbXX0.TctJgp8rNIzd_onjIEIQJhzQ_yGnRtzvoW2t5sglIqyxU41ukqX1b3hlQpB5VsTGfj9cySaO14kfGbAbdXRvyOMs3smoSIuHuQfCIXS0upiH17IiSUsyjCHRR9z_H1LmhAM1yqEixjyGYb0sB4bosaz08aWAC1-Rt3KTNT_3x5R4Y8yuRVG9ekti87rfje7n2I6zEXMgJb_ieEtc4wXAKB8PDj7ihE57h5ZmI0INU1a1b9wxeXneJEPVc4uZqcdM6SFyHRh2VauKCPk_ds60aIuPXm4RABQmRCX62rTyKLu1Ert9UND-emDMCsZnfZs_IJtOXhPvg1rP8ofTvajFGBAAfAhDIBngNOMQPAxUJH2jTSv_WevZDiKM0aQ_Aeim9mQ4YHLDcYwRzpIxG5JnYL8B_G-_O10H5S8F-FwIkxcYB8jNZGYwumbtJKy6BFCLKHBGZR5amLNGEUpnOG9sGLU2D8iL3r9O3-AfZvkNfdYRHN4RKPjIZ5VLKvz-za4_3BTEB1YQ8-XLE5fZHg_VmBZDeGjv9-5OXClsjENKLAITxHhaJXv93vEHh-gfz0VbQLullr6K2QwRgP4cAlaqjvLERMl6a3PHpzExHYVeWQ0a9DTVKnwwV6fLUWW7PVEcFGev0xx-zi--a_0tHpzli385U0Euila0M4EB-O_I';
 const GROUP_ID = '183450498879194605';
 
@@ -1180,15 +1178,16 @@ async function submitForm(nameId, emailId, msgId, errId) {
   errEl.style.display = 'none';
 
   if (!name) { errEl.textContent = 'Please enter your first name.'; errEl.style.display = 'block'; return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email address.'; errEl.style.display = 'block'; return; }
+  if (!email || !email.includes('@') || !email.includes('.')) { errEl.textContent = 'Please enter a valid email address.'; errEl.style.display = 'block'; return; }
 
-  const btn = errEl.previousElementSibling.previousElementSibling;
+  const btn = document.querySelector('#' + msgId).previousElementSibling.previousElementSibling;
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
   try {
     const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
       method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -1200,15 +1199,25 @@ async function submitForm(nameId, emailId, msgId, errId) {
         groups: [GROUP_ID]
       })
     });
-    if (res.ok || res.status === 200 || res.status === 201) {
+
+    if (res.status === 200 || res.status === 201 || res.status === 422) {
       msgEl.style.display = 'block';
       document.getElementById(nameId).value = '';
       document.getElementById(emailId).value = '';
-      btn.textContent = '🐾 Send Me The Free Guide';
-      btn.disabled = false;
       if(typeof fbq !== 'undefined') fbq('track', 'Lead');
-      if(typeof gtag !== 'undefined') { gtag('event', 'conversion', {'event_category': 'lead'}); gtag('event', 'generate_lead'); }
+      if(typeof gtag !== 'undefined') gtag('event', 'conversion', {'event_category': 'lead'});
     } else {
-      throw new Error('API error');
+      throw new Error('status ' + res.status);
     }
-  } ca
+  } catch(e) {
+    console.error('Form error:', e);
+    errEl.textContent = 'Something went wrong. Please try again or contact us on Facebook.';
+    errEl.style.display = 'block';
+  }
+  btn.textContent = '🐾 Send Me The Free Guide';
+  btn.disabled = false;
+}
+</script>
+
+</body>
+</html>
